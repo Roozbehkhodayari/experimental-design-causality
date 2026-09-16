@@ -1,30 +1,34 @@
 In all cases, written answers (apart from code) should not be longer than about three paragraphs.  Graders may not read all of your
 submission if it is longer than that.
 
-Homework reflection 1
+## Homework Reflection 1
 
-1. In Coding Quiz 1, you are asked to find the distance of the farthest match in a set.  Is this farthest match distance too far to be a meaningful match?  How can you decide this?
+**1. In Coding Quiz 1, you are asked to find the distance of the farthest match in a set. Is this farthest match distance too far to be a meaningful match? How can you decide this?**
 
-2. In Coding Quiz 1, there are two approaches to matching: 
-(A) Picking the best match X = 0 corresponding to each X = 1 using Z values.
-(B) Using radius_neighbors to pick all matches X = 0 within a distance of 0.2 of each X = 1.
+The farthest match distance is 0.2102, but this number alone does not tell us whether the match is too far because it depends on the scale of `Z`.
 
-Invent your own type of matching similar to 1 and 2 (or look one up on the internet), which has a different way to pick the matches in X = 0.  Clearly explain the approach you invented or found.
+I would first standardize the matching distance by dividing it by the standard deviation of `Z`. Then I would compare the standardized distance with a chosen caliper, which is the maximum acceptable matching distance. For example, using a caliper of 0.2 on the standardized scale means that any raw matching distance greater than `0.2 × SD(Z)` would be rejected.
 
-Homework reflection 2
+I would also check whether this caliper gives good balance between the treatment and matched control groups without leaving too many treatment observations unmatched.
 
-1. Invent an example situation that would use fixed effects.
+**2. In Coding Quiz 1, there are two approaches to matching: (A) Picking the best match X = 0 corresponding to each X = 1 using Z values. (B) Using radius_neighbors to pick all matches X = 0 within a distance of 0.2 of each X = 1. Invent your own type of matching similar to 1 and 2 (or look one up on the internet), which has a different way to pick the matches in X = 0. Clearly explain the approach you invented or found.**
 
-2. Write a Python program that performs a bootstrap simulation to find the variance in the mean of the Pareto distribution when different samples are taken.  Explain what you had to do for this.  As you make the full sample size bigger (for the same distribution), what happens to the variance of the mean of the samples?  Does it stay about the same, get smaller, or get bigger?
+Another approach is k-nearest-neighbor matching with a caliper. For each treatment observation, I would find the `k` control observations with the closest values of `Z`. Then I would keep only the controls whose distance is within the chosen caliper, so very distant matches are not used. For example, if `k = 3`, a treatment observation could be matched with up to three nearby controls. I would then use the average `Y` value of the matched controls as the comparison outcome for that treatment observation. This is different from using only one nearest control or using every control within a fixed radius.
 
-Homework reflection 3
+## **Homework reflection 2**
 
-1. In the event study in Coding Quiz 3, how would we go about testing for a change in the second derivative as well?
+**1. Invent an example situation that would use fixed effects.**
 
-2. Create your own scenario that illustrates differences-in-differences. Describe the story behind the data and show whether there is a nonzero treatment effect.
+**2. Write a Python program that performs a bootstrap simulation to find the variance in the mean of the Pareto distribution when different samples are taken.  Explain what you had to do for this.  As you make the full sample size bigger (for the same distribution), what happens to the variance of the mean of the samples?  Does it stay about the same, get smaller, or get bigger?**
 
-Homework reflection 4
+## **Homework reflection 3**
 
-1. The Coding Quiz gives two options for instrumental variables.  For the second item (dividing the range of W into multiple ranges), explain how you did it, show your code, and discuss any issues you encountered.
+**1. In the event study in Coding Quiz 3, how would we go about testing for a change in the second derivative as well?**
 
-2. Plot the college outcome (Y) vs. the test score (X) in a small range of test scores around 80. On the plot, compare it with the Y probability predicted by logistic regression. The ground truth Y value is 0 or 1; don't just plot 0 or 1 - that will make it unreadable.  Find some way to make it look better than that.
+**2. Create your own scenario that illustrates differences-in-differences. Describe the story behind the data and show whether there is a nonzero treatment effect.**
+
+## **Homework reflection 4**
+
+**1. The Coding Quiz gives two options for instrumental variables.  For the second item (dividing the range of W into multiple ranges), explain how you did it, show your code, and discuss any issues you encountered.**
+
+**2. Plot the college outcome (Y) vs. the test score (X) in a small range of test scores around 80. On the plot, compare it with the Y probability predicted by logistic regression. The ground truth Y value is 0 or 1; don't just plot 0 or 1 - that will make it unreadable.  Find some way to make it look better than that.**
